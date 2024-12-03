@@ -1,5 +1,6 @@
 package com.thetestingacademy.Integration;
 
+import io.qameta.allure.Description;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -56,6 +57,7 @@ public class API014_IntegrationTestCase3 {
         bookingID = response.jsonPath().getString("bookingid");
         return bookingID;
     }
+    @Description("Verify if user able to update the booking details")
     @Test(priority = 1)
     public void test_updateBooking() {
         String token = getToken();
@@ -82,6 +84,7 @@ public class API014_IntegrationTestCase3 {
         validatableResponse.statusCode(200);
 
     }
+    @Description(" Verify Get booking details")
     @Test(priority = 2)
     public void GetBooking() {
         System.out.println(bookingID);

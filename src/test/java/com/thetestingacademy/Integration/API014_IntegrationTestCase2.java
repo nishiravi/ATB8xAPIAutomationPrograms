@@ -16,6 +16,7 @@ public class API014_IntegrationTestCase2 {
     String bookingID;
 
     // Create booking
+    // Verify the GET Request
     public String getBookingID() {
         requestSpecification.baseUri("https://restful-booker.herokuapp.com");
         requestSpecification.basePath("/booking");

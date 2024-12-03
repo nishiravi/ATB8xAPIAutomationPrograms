@@ -12,7 +12,7 @@ public class API014_IntegrationTestCase4 {
     //  Create a Token
     // Create a Booking
     // Delete the ID
-    // Update the deleted ID
+    // Try to Update the deleted ID by PUT request
 
     RequestSpecification requestSpecification = RestAssured.given();
     ;
