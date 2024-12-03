@@ -1,4 +1,4 @@
-package com.thetestingacademy.CURDOperations.POST;
+package com.thetestingacademy.SAMPLECURDOperations.POST;
 
 import io.qameta.allure.Description;
 import io.restassured.RestAssured;

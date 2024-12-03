@@ -3,7 +3,7 @@
 <suite name="RestFull-Booker POST TestCases">
     <test verbose="2" preserve-order="true" name="ATB8xAPIAutomationPrograms">
         <classes>
-            <class name="com.thetestingacademy.CURDOperations.POST.APITesting008">
+            <class name="com.thetestingacademy.SAMPLECURDOperations.POST.APITesting008">
                 <methods>
                     <include name="test_CreateToken"/>
                 </methods>

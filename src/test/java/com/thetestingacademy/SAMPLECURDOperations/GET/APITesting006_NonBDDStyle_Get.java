@@ -1,4 +1,4 @@
-package com.thetestingacademy.CURDOperations.GET;
+package com.thetestingacademy.SAMPLECURDOperations.GET;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;

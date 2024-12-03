@@ -1,4 +1,4 @@
-package com.thetestingacademy.CURDOperations.GET;
+package com.thetestingacademy.SAMPLECURDOperations.GET;
 
 import io.restassured.RestAssured;
 import org.testng.annotations.Test;
