@@ -6,8 +6,13 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import org.hamcrest.Matchers;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+import org.assertj.core.api.Assertions.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class API015_IntegrationTestCase2 {
     RequestSpecification requestSpecification = RestAssured.given();
@@ -17,12 +22,13 @@ public class API015_IntegrationTestCase2 {
 
     // Create booking
     // Verify the GET Request
+    @Test(priority = 1)
     public String getBookingID() {
         requestSpecification.baseUri("https://restful-booker.herokuapp.com");
         requestSpecification.basePath("/booking");
         requestSpecification.contentType(ContentType.JSON);
         String payloadCreate = "{\n" +
-                "    \"firstname\" : \"Nishi\",\n" +
+                "    \"firstname\" : \"Shriyan\",\n" +
                 "    \"lastname\" : \"Sangeeth\",\n" +
                 "    \"totalprice\" : 111,\n" +
                 "    \"depositpaid\" : true,\n" +
@@ -37,6 +43,15 @@ public class API015_IntegrationTestCase2 {
         validatableResponse = response.then().log().all();
         validatableResponse.statusCode(200);
         bookingID = response.jsonPath().getString("bookingid");
+        String firstname=response.jsonPath().getString("booking.firstname");
+        String lastname=response.jsonPath().getString("booking.lastname");
+        //Testng assert
+        Assert.assertNotNull(bookingID);
+        Assert.assertEquals(firstname, "Shriyan");
+        SoftAssert sa = new SoftAssert();
+        sa.assertEquals(lastname, "Sangeeth");
+        //sa.assertTrue(false); // will fail because assertTrue expects true
+        sa.assertAll();
         return bookingID;
     }
 
@@ -50,6 +65,12 @@ public class API015_IntegrationTestCase2 {
         validatableResponse = response.then().log().all();
         validatableResponse.statusCode(200);
 
+        String firstname = response.then().extract().path("firstname");
+        String lastname=response.jsonPath().getString("lastname");
+        // validatableRsponse assertions
+        validatableResponse.body("lastname", Matchers.equalToIgnoringCase("Sangeeth"));
+        //AssertJ
+        assertThat(firstname).isEqualTo("Shriyan").isAlphabetic().isNotBlank().isNotEmpty();
     }
 
 }

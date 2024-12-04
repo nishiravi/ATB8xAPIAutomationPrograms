@@ -38,8 +38,8 @@ public class API019_TestNGAssertion {
         int bookingID = response.then().extract().path("bookingid");
         String firstname = response.then().extract().path("booking.firstname");
         String lastname = response.then().extract().path("booking.lastname");
-        Assert.assertNotNull(bookingID);
         // Hard assert
+        Assert.assertNotNull(bookingID);
         Assert.assertEquals(firstname, "Nishi");
         // Soft Assert
         SoftAssert sa = new SoftAssert();

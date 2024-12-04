@@ -5,8 +5,11 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import org.hamcrest.Matchers;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+import static org.assertj.core.api.Assertions.*;
 
 public class API014_IntegrationTestCase1 {
 
@@ -46,7 +49,7 @@ public class API014_IntegrationTestCase1 {
         requestSpecification.contentType(ContentType.JSON);
         String payloadCreate = "{\n" +
                 "    \"firstname\" : \"Nishi\",\n" +
-                "    \"lastname\" : \"Brown\",\n" +
+                "    \"lastname\" : \"Sangeeth\",\n" +
                 "    \"totalprice\" : 111,\n" +
                 "    \"depositpaid\" : true,\n" +
                 "    \"bookingdates\" : {\n" +
@@ -68,8 +71,8 @@ public class API014_IntegrationTestCase1 {
         String token = getToken();
         String bookingID = getBookingID();
         String payloadPut = "{\n" +
-                "    \"firstname\" : \"Shriyan\",\n" +
-                "    \"lastname\" : \"Brown\",\n" +
+                "    \"firstname\" : \"Shweta\",\n" +
+                "    \"lastname\" : \"Test\",\n" +
                 "    \"totalprice\" : 111,\n" +
                 "    \"depositpaid\" : true,\n" +
                 "    \"bookingdates\" : {\n" +
@@ -87,8 +90,8 @@ public class API014_IntegrationTestCase1 {
         response = requestSpecification.when().put();
         validatableResponse = response.then().log().all();
         validatableResponse.statusCode(200);
-
-
+        // Assert using validatable response
+        validatableResponse.body("firstname", Matchers.equalToIgnoringCase("Shweta"));
     }
 
     @Test(priority = 2)
@@ -99,8 +102,12 @@ public class API014_IntegrationTestCase1 {
         response = requestSpecification.when().log().all().get();
         validatableResponse = response.then().log().all();
         validatableResponse.statusCode(200);
+        //Test NG Assert
         String firstname = response.jsonPath().getString("firstname");
-        Assert.assertEquals(firstname, "Shriyan");
+        String lastname=response.jsonPath().getString("lastname");
+        Assert.assertEquals(firstname, "Shweta");
+        SoftAssert softAssert=new SoftAssert();
+        softAssert.assertEquals(lastname,"Test");
     }
 
     @Test(priority = 3)
@@ -108,6 +115,8 @@ public class API014_IntegrationTestCase1 {
         requestSpecification.baseUri("https://restful-booker.herokuapp.com");
         requestSpecification.basePath("/booking/" + bookingID);
         requestSpecification.cookie(token, token);
+        //AssertJ Assertions
+        assertThat(token).isNotNull().isNotBlank().isNotEmpty();
         requestSpecification.contentType(ContentType.JSON);
         requestSpecification.auth().preemptive().basic("admin", "password123");
         requestSpecification.log().all();
